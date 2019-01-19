@@ -11,7 +11,7 @@ public class Lamp {
 
 	private String name;
 
-	private Lamp(Communicator communicator, String name) {
+	protected Lamp(Communicator communicator, String name) {
 		this.name = name;
 		this.communicator = communicator;
 	}
@@ -20,7 +20,7 @@ public class Lamp {
 		Map<String, Object> values = new HashMap<>();
 		values.put("command", "fill");
 		values.put("rgb", color);
-		return communicator.sendMessage("laumio/" + name + "/json", values);
+		return communicator.sendMessageJson("laumio/" + name + "/json", values);
 	}
 
 	public boolean pixel(int pixelId, Color color)
@@ -29,7 +29,7 @@ public class Lamp {
 		values.put("command", "set_pixel");
 		values.put("led", pixelId);
 		values.put("rgb", color);
-		return communicator.sendMessage("laumio/" + name + "/json", values);
+		return communicator.sendMessageJson("laumio/" + name + "/json", values);
 	}
 
 	public boolean ring(int ringId, Color color)
@@ -38,7 +38,7 @@ public class Lamp {
 		values.put("command", "set_ring");
 		values.put("ring", ringId);
 		values.put("rgb", color);
-		return communicator.sendMessage("laumio/" + name + "/json", values);
+		return communicator.sendMessageJson("laumio/" + name + "/json", values);
 	}
 
 	public boolean column(int columnId, Color color)
@@ -47,6 +47,6 @@ public class Lamp {
 		values.put("command", "set_column");
 		values.put("column", columnId);
 		values.put("rgb", color);
-		return communicator.sendMessage("laumio/" + name + "/json", values);
+		return communicator.sendMessageJson("laumio/" + name + "/json", values);
 	}
 }

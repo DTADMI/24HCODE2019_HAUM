@@ -27,6 +27,10 @@ public class Communicator {
 
 	private IMqttClient client;
 
+	public boolean isConnected() {
+		return isConnected;
+	}
+
 	private boolean isConnected = false;
 
 	private ObservableMap<String, CommunicatorReceiverListener> receiverListeners = FXCollections.observableHashMap();
@@ -64,7 +68,7 @@ public class Communicator {
 	public boolean start() {
 		try {
 			String publisherId = UUID.randomUUID().toString();
-			final IMqttClient client = new MqttClient("tcp://" + address + ":" + port, publisherId);
+			client = new MqttClient("tcp://" + address + ":" + port, publisherId);
 
 			MqttConnectOptions options = new MqttConnectOptions();
 			options.setAutomaticReconnect(true);
@@ -99,11 +103,12 @@ public class Communicator {
 		return true;
 	}
 
-	public boolean sendMessage(String topic, Map<String, Object> parameters) {
+	public boolean sendMessageJson(String topic, Map<String, Object> parameters) {
 		if (!isConnected) {
 			return false;
 		}
 		String json = "{\n";
+		int i=0;
 		for (Entry<String, Object> p : parameters.entrySet()) {
 			json += "'" + p.getKey() + "':";
 			Object value = p.getValue();
@@ -117,9 +122,33 @@ public class Communicator {
 						+ Math.min(255, (int) color.getRed() * 255) + "," + Math.min(255, (int) color.getRed() * 255)
 						+ "]";
 			}
+			if (i<parameters.size()-1)
+			{
+				json+=",\n";
+			}
+
+			i++;
 		}
-		json += "}";
+		json += "\n}";
+		System.out.println(json);
 		byte[] payload = json.getBytes();
+		MqttMessage msg = new MqttMessage(payload);
+		msg.setQos(0);
+		msg.setRetained(true);
+		try {
+			client.publish(topic, msg);
+		} catch (MqttException e) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean sendMessage(String topic, String message) {
+		if (!isConnected) {
+			return false;
+		}
+
+		byte[] payload = message.getBytes();
 		MqttMessage msg = new MqttMessage(payload);
 		msg.setQos(0);
 		msg.setRetained(true);
