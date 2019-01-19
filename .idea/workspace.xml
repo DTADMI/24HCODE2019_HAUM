@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2b07328e-0430-4bad-91c2-7a7c2fb993c3" name="Default Changelist" comment="" />
+    <list default="true" id="2b07328e-0430-4bad-91c2-7a7c2fb993c3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/2c274e37-a8f8-45cf-83b7-a72f5de7e331-tcpmpdlan1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/2ee7cb4e-d915-4b0a-851a-ffd76c30d77e-tcpioteclipseorg1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/43df3c64-c6e8-4b02-bf25-52ee1c5ce5b7-tcpmpdlan1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/45d6dba1-d0f5-4e7f-905f-e98b944c4289-tcpioteclipseorg1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/66a0aa70-c204-4216-bb02-0cdaff27b49f-tcpioteclipseorg1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/7bb12eb1-838d-4e9b-8dcb-f2a75093301b-tcpioteclipseorg1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/b2d50277-5c37-4f04-9ce2-6db297375458-tcpmpdlan1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/b9b4db0b-7f95-4f73-91ba-f107e4fee87c-tcpioteclipseorg1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/c044a6ef-690f-4fc8-a2c0-ca68fca5ba0a-tcpmpdlan1883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/f74f9e07-5498-4176-b8f9-618bf0109099-tcpmpdlan1883/.lck" beforeDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +77,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/haumsweetohm/Communicator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
+            <state relative-caret-position="357">
               <caret line="44" column="52" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -283,17 +294,17 @@
       <option name="presentableId" value="Default" />
       <updated>1547907443219</updated>
       <workItem from="1547907446226" duration="2470000" />
-      <workItem from="1547909962788" duration="63000" />
+      <workItem from="1547909962788" duration="672000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2533000" />
+    <option name="totallyTimeSpent" value="3142000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="33" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12214765" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12214765" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -308,7 +319,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32907802" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32907802" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -348,7 +359,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/haumsweetohm/Communicator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
+        <state relative-caret-position="357">
           <caret line="44" column="52" selection-start-line="44" selection-start-column="47" selection-end-line="44" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
