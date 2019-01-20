@@ -1,7 +1,5 @@
 package haumsweetohm;
 
-import javafx.scene.paint.Color;
-
 public class Main {
 
     private static final String ADRESS = "mpd.lan";
@@ -18,18 +16,33 @@ public class Main {
             System.out.println("Connected");
             PushButtonSensor pushButtonSensor = new PushButtonSensor(communicator);
 
-            Lamp lamp1 = new Lamp(communicator, "all");
+            AtmosphericSensor atmosphericSensor = new AtmosphericSensor(communicator);
+            DistanceDetectorSensor distanceDetectorSensor = new DistanceDetectorSensor(communicator);
+            InfraredSwitchSensor infraredSwitchSensor = new InfraredSwitchSensor(communicator);
+            PresenceDetectorSensor presenceDetectorSensor = new PresenceDetectorSensor(communicator);
 
-            pushButtonSensor.call();
+            MusicController musicController = new MusicController(communicator);
 
-            if(pushButtonSensor.advertise()){
-                lamp1.fill(Color.RED);
+            //Lamp lamp = new Lamp(communicator, "all");
+            //Lamp lamp1 = new Lamp(communicator, "Laumio_0FBFBF");
+            //lamp1.fill(Color.BLUE);
+            //pushButtonSensor.call();
+            atmosphericSensor.call();
+            //distanceDetectorSensor.call();
+            //infraredSwitchSensor.call();
+            //presenceDetectorSensor.call();
+            //musicController.call();
+
+            //musicController.playMusic();//"Laumio_0FBFBF");
+
+            /*if(pushButtonSensor.advertise()){
+                //lamp1.fill(Color.RED);
                 //pushButtonSensor.switchLed(1, "OFF"); //RED
                 //pushButtonSensor.switchLed(2, "OFF"); //BLUE
                 //pushButtonSensor.switchLed(3, "OFF"); //YELLOW
-                pushButtonSensor.switchLed(4, "OFF"); //GREEN
+                pushButtonSensor.switchLed(4, "OFF"); //DARKGREEN
 
-            }
+            }*/
             System.out.println("End");
         } catch (Exception e) {
             // TODO Auto-generated catch block

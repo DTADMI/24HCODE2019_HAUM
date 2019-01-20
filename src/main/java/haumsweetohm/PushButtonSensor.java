@@ -1,5 +1,7 @@
 package haumsweetohm;
 
+import javafx.scene.paint.Color;
+
 import java.util.concurrent.Callable;
 
 public class PushButtonSensor implements Callable<Void> {
@@ -25,23 +27,21 @@ public class PushButtonSensor implements Callable<Void> {
             return null;
         } else {
             communicator.getReceiverListeners().put("capteur_bp/status", message -> {
-                System.out.println("capteur_bp/status "+getStatus(message));
+                System.out.println("capteur_bp/status " + getStatus(message));
             });
 
             communicator.getReceiverListeners().put("capteur_bp/switch/led1/state", message -> {
-                System.out.println(getLed1Status("capteur_bp/switch/led1/state "+message));
+                handleLed1Status(message, "Laumio_0FBFBF");
             });
 
-            communicator.getReceiverListeners().put("capteur_bp/switch/led2/state", message -> {
-                System.out.println(getLed2Status("capteur_bp/switch/led2/state "+message));
-            });
+            communicator.getReceiverListeners().put("capteur_bp/switch/led2/state", message -> handleLed2Status(message, "Laumio_0FBFBF"));
 
             communicator.getReceiverListeners().put("capteur_bp/switch/led3/state", message -> {
-                System.out.println(getLed3Status("capteur_bp/switch/led3/state "+message));
+                handleLed3Status(message, "Laumio_0FBFBF");
             });
 
             communicator.getReceiverListeners().put("capteur_bp/switch/led4/state", message -> {
-                System.out.println(getLed4Status("capteur_bp/switch/led4/state "+message));
+                handleLed4Status(message, "Laumio_0FBFBF");
             });
 
             communicator.getReceiverListeners().put("capteur_bp/binary_sensor/bp1/state", message -> {
@@ -75,19 +75,56 @@ public class PushButtonSensor implements Callable<Void> {
     private String getStatus(String message){
         return message;
     }
-    private String getLed1Status(String message) {
+
+    private String handleLed1Status(String message, String name) {
+        System.out.println("capteur_bp/switch/led1/state : " + message);
+        Lamp lamp = new Lamp(communicator, name);
+        if("ON".equals(message)){
+            System.out.println(name + " switched to RED");
+            lamp.fill(Color.RED);
+        } else {
+            System.out.println(name + " switched to WHITE");
+            lamp.fill(Color.WHITE);
+        }
         return message;
     }
 
-    private String getLed2Status(String message) {
+    private String handleLed2Status(String message, String name) {
+        System.out.println("capteur_bp/switch/led2/state : " + message);
+        Lamp lamp = new Lamp(communicator, name);
+        if("ON".equals(message)){
+            System.out.println(name + " switched to BLUE");
+            lamp.fill(Color.BLUE);
+        } else {
+            System.out.println(name + " switched to WHITE");
+            lamp.fill(Color.WHITE);
+        }
         return message;
     }
 
-    private String getLed3Status(String message) {
+    private String handleLed3Status(String message, String name) {
+        System.out.println("capteur_bp/switch/led3/state : " + message);
+        Lamp lamp = new Lamp(communicator, name);
+        if("ON".equals(message)){
+            System.out.println(name + " switched to YELLOW");
+            lamp.fill(Color.YELLOW);
+        } else {
+            System.out.println(name + " switched to WHITE");
+            lamp.fill(Color.WHITE);
+        }
         return message;
     }
 
-    private String getLed4Status(String message) {
+    private String handleLed4Status(String message, String name) {
+        System.out.println("capteur_bp/switch/led4/state : " + message);
+        Lamp lamp = new Lamp(communicator, name);
+        if("ON".equals(message)){
+            System.out.println(name + " switched to VIOLET");
+            lamp.fill(Color.VIOLET);
+        } else {
+            System.out.println(name + " switched to WHITE");
+            lamp.fill(Color.WHITE);
+        }
         return message;
     }
 
@@ -127,6 +164,4 @@ public class PushButtonSensor implements Callable<Void> {
     {
         return communicator.sendMessage("capteur_bp/status/advertise", "");
     }
-
-
 }

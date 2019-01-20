@@ -1,5 +1,7 @@
 package haumsweetohm;
 
+import javafx.scene.paint.Color;
+
 import java.util.concurrent.Callable;
 
 public class AtmosphericSensor implements Callable<Void> {
@@ -10,123 +12,56 @@ public class AtmosphericSensor implements Callable<Void> {
         this.communicator = communicator;
     }
 
-    protected AtmosphericSensor(String address, int port) {
-        this.communicator = new Communicator(address, port);
-    }
-
-    /*private PushButtonSensor(String address, int port) throws MqttException {
-        String publisherId = UUID.randomUUID().toString();
-        this.client = new MqttClient("tcp://" + address + ":" + port, publisherId);
-    }*/
-
     @Override
     public Void call() throws Exception {
         if ( !communicator.isConnected()) {
             return null;
         } else {
-            communicator.getReceiverListeners().put("capteur_bp/status", message -> {
-                System.out.println("capteur_bp/status "+getStatus(message));
+            communicator.getReceiverListeners().put("atmosphere/temperature", message -> {
+                System.out.println("atmosphere/temperature " + handleTemperatureValue(message, "Laumio_0FBFBF"));
             });
 
-            communicator.getReceiverListeners().put("capteur_bp/switch/led1/state", message -> {
-                System.out.println(getLed1Status("capteur_bp/switch/led1/state "+message));
+            communicator.getReceiverListeners().put("atmosphere/pression", message -> {
+                handlePressionValue(message, "Laumio_0FBFBF");
             });
 
-            communicator.getReceiverListeners().put("capteur_bp/switch/led2/state", message -> {
-                System.out.println(getLed2Status("capteur_bp/switch/led2/state "+message));
-            });
+            communicator.getReceiverListeners().put("atmosphere/humidite", message -> handleHumidityValue(message, "Laumio_0FBFBF"));
 
-            communicator.getReceiverListeners().put("capteur_bp/switch/led3/state", message -> {
-                System.out.println(getLed3Status("capteur_bp/switch/led3/state "+message));
-            });
-
-            communicator.getReceiverListeners().put("capteur_bp/switch/led4/state", message -> {
-                System.out.println(getLed4Status("capteur_bp/switch/led4/state "+message));
-            });
-
-            communicator.getReceiverListeners().put("capteur_bp/binary_sensor/bp1/state", message -> {
-                System.out.println(getPushButton1Status(message));
-            });
-
-            communicator.getReceiverListeners().put("capteur_bp/binary_sensor/bp2/state", message -> {
-                System.out.println(getPushButton2Status(message));
-            });
-
-            communicator.getReceiverListeners().put("capteur_bp/binary_sensor/bp3/state", message -> {
-                System.out.println(getPushButton3Status(message));
-            });
-
-            communicator.getReceiverListeners().put("capteur_bp/binary_sensor/bp4/state", message -> {
-                System.out.println(getPushButton4Status(message));
-            });
-
-            communicator.getReceiverListeners().put("capteur_bp/sensor/bp_rssi/state", message -> {
-                System.out.println(getWifiStatus(message));
-            });
-
-            communicator.getReceiverListeners().put("capteur_bp/sensor/uptime_sensor/state", message -> {
-                System.out.println(getUpTimeStatus(message));
+            communicator.getReceiverListeners().put("atmosphere/humidite_absolue", message -> {
+                handleAbsoluteHumidityValue(message, "Laumio_0FBFBF");
             });
         }
 
         return null;
     }
 
-    private String getStatus(String message){
-        return message;
-    }
-    private String getLed1Status(String message) {
+    private String handleTemperatureValue(String message, String name) {
+        System.out.println("atmosphere/temperature : " + message);
+
+        System.out.println("Temperature : " + message + " °C");
         return message;
     }
 
-    private String getLed2Status(String message) {
+    private String handlePressionValue(String message, String name) {
+        System.out.println("atmosphere/pression : " + message);
+        System.out.println("Pression : " + message + " hPa");
         return message;
     }
 
-    private String getLed3Status(String message) {
+    private String handleHumidityValue(String message, String name) {
+        System.out.println("atmosphere/humidite : " + message);
+        System.out.println("Humidité : " + message + " %");
         return message;
     }
 
-    private String getLed4Status(String message) {
+    private String handleAbsoluteHumidityValue(String message, String name) {
+        System.out.println("atmosphere/pression : " + message);
+        System.out.println("Humidité absolue : " + message + " g/m^3");
         return message;
-    }
-
-    private String getPushButton1Status(String message) {
-        return message;
-    }
-
-    private String getPushButton2Status(String message) {
-        return message;
-    }
-
-    private String getPushButton3Status(String message) {
-        return message;
-    }
-
-    private String getPushButton4Status(String message) {
-        return message;
-    }
-
-    private String getWifiStatus(String message) {
-        return message;
-    }
-
-    private String getUpTimeStatus(String message) {
-        return message;
-    }
-
-    public boolean switchLed(int ledNum, String message)
-    {
-        if(!"ON".equals(message)){
-            message = "OFF";
-        }
-        return communicator.sendMessage("capteur_bp/switch/led"+ledNum+"/command", message);
     }
 
     public boolean advertise()
     {
-        return communicator.sendMessage("capteur_bp/status/advertise", "");
+        return communicator.sendMessage("atmosphere/status/advertise", "");
     }
-
-
 }

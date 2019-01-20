@@ -52,6 +52,7 @@ public class Communicator {
 				client.subscribe(topic, (topic2, msg) -> {
 					byte[] payload = msg.getPayload();
 					String value = new String(payload);
+					System.out.println(value);
 					CommunicatorReceiverListener rl = receiverListeners.get(topic);
 					if (rl != null) {
 						rl.onMessageReceived(value);
@@ -80,11 +81,13 @@ public class Communicator {
 			receiverListeners.addListener((MapChangeListener<String, CommunicatorReceiverListener>) change -> {
 				String topic = change.getKey();
 				if (change.wasAdded()) {
+					//System.out.println("Add	");
 					Thread alreadyExistentThread = listeningThreads.get(topic);
 					if (alreadyExistentThread == null) {
 						listeningThreads.put(topic, startListeningThread(topic));
 					}
 				} else if (change.wasRemoved()) {
+					//System.out.println("Remove	");
 					Thread alreadyExistentThread = listeningThreads.remove(topic);
 					if (alreadyExistentThread != null) {
 						try {
@@ -119,8 +122,9 @@ public class Communicator {
 			} else if (value instanceof Color) {
 				Color color = (Color) value;
 				json += "[" + Math.min(255, (int) color.getRed() * 255) + ","
-						+ Math.min(255, (int) color.getRed() * 255) + "," + Math.min(255, (int) color.getRed() * 255)
+						+ Math.min(255, (int) color.getGreen() * 255) + "," + Math.min(255, (int) color.getBlue() * 255)
 						+ "]";
+				System.out.println("json : " + json.toString());
 			}
 			if (i<parameters.size()-1)
 			{
@@ -135,23 +139,35 @@ public class Communicator {
 		MqttMessage msg = new MqttMessage(payload);
 		msg.setQos(0);
 		msg.setRetained(true);
-		try {
-			client.publish(topic, msg);
-		} catch (MqttException e) {
-			return false;
-		}
+		new Thread(() -> {
+			try {
+				client.publish(topic, msg);
+			} catch (MqttException e) {
+				e.printStackTrace();
+			}
+		}).start();
+
 		return true;
 	}
 
-	public boolean sendMessage(String topic, String message) {
-		if (!isConnected) {
-			return false;
-		}
-
-		byte[] payload = message.getBytes();
+	private MqttMessage configMqttMessage(byte[] payload){
 		MqttMessage msg = new MqttMessage(payload);
 		msg.setQos(0);
 		msg.setRetained(true);
+		return msg;
+	}
+
+	public boolean sendMessage(String topic, Object message) {
+		if (!isConnected) {
+			return false;
+		}
+		MqttMessage msg = new MqttMessage();
+		if (message instanceof String) {
+			msg = configMqttMessage(((String) message).getBytes());
+		} else if (message instanceof Number) {
+			msg = configMqttMessage(new byte[((Number) message).byteValue()]);
+		}
+
 		try {
 			client.publish(topic, msg);
 		} catch (MqttException e) {

@@ -20,6 +20,19 @@ public class Lamp {
 		Map<String, Object> values = new HashMap<>();
 		values.put("command", "fill");
 		values.put("rgb", color);
+		System.out.println("color : " + color);
+		return communicator.sendMessageJson("laumio/" + name + "/json", values);
+	}
+
+	public boolean fill(int red, int green, int blue) {
+		Map<String, Object> values = new HashMap<>();
+		values.put("command", "fill");
+		System.out.println("fill : red : " + red);
+		System.out.println("fill : green : " + green);
+		System.out.println("fill : blue : " + blue);
+		Color color = Color.color(red, green, blue);
+		values.put("rgb", color);
+		System.out.println("color : " + color);
 		return communicator.sendMessageJson("laumio/" + name + "/json", values);
 	}
 
