@@ -165,7 +165,8 @@ public class Communicator {
 		if (message instanceof String) {
 			msg = configMqttMessage(((String) message).getBytes());
 		} else if (message instanceof Number) {
-			msg = configMqttMessage(new byte[((Number) message).byteValue()]);
+		    byte[] payload = {((Number) message).byteValue()};
+			msg = configMqttMessage(payload);
 		}
 
 		try {
